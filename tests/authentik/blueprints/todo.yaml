@@ -1,0 +1,49 @@
+version: 1
+metadata:
+  name: Local Task Service
+entries:
+  - model: authentik_core.group
+    identifiers:
+      name: todo-admin
+    attrs:
+      is_superuser: false
+  - model: authentik_core.group
+    identifiers:
+      name: todo-editor
+    attrs:
+      is_superuser: false
+  - model: authentik_core.group
+    identifiers:
+      name: todo-reader
+    attrs:
+      is_superuser: false
+  - model: authentik_providers_oauth2.oauth2provider
+    id: todo-provider
+    identifiers:
+      name: Local Task Service
+    attrs:
+      client_id: todo
+      client_type: confidential
+      grant_types: [authorization_code]
+      client_secret: !Env TODO_OIDC_SECRET
+      redirect_uris:
+        - matching_mode: strict
+          url: !Env TODO_REDIRECT_URI
+        - matching_mode: strict
+          url: !Env TODO_LEGACY_REDIRECT_URI
+      authorization_flow: !Find [authentik_flows.flow, [slug, default-provider-authorization-implicit-consent]]
+      invalidation_flow: !Find [authentik_flows.flow, [slug, default-provider-invalidation-flow]]
+      signing_key: !Find [authentik_crypto.certificatekeypair, [name, authentik Self-signed Certificate]]
+      property_mappings:
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, openid]]
+        - !Find [authentik_providers_oauth2.scopemapping, [scope_name, profile]]
+      sub_mode: hashed_user_id
+      issuer_mode: per_provider
+      include_claims_in_id_token: true
+  - model: authentik_core.application
+    identifiers:
+      slug: todo
+    attrs:
+      name: Tasks
+      provider: !KeyOf todo-provider
+      meta_launch_url: !Env TODO_APP_ORIGIN

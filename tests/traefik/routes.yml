@@ -1,0 +1,46 @@
+http:
+  routers:
+    identity:
+      rule: PathPrefix(`/auth/`)
+      priority: 20
+      entryPoints: [web]
+      service: identity
+    todo:
+      rule: PathPrefix(`/todo/`)
+      priority: 10
+      entryPoints: [web]
+      service: todo
+      middlewares: [todo-path]
+    entry:
+      rule: Path(`/todo`) || Path(`/auth`)
+      entryPoints: [web]
+      service: noop@internal
+      middlewares: [entry-path]
+    root:
+      rule: Path(`/`)
+      entryPoints: [web]
+      service: noop@internal
+      middlewares: [root-path]
+  middlewares:
+    todo-path:
+      stripPrefix:
+        prefixes: [/todo]
+    entry-path:
+      redirectRegex:
+        regex: ^(https?://[^/]+)/(auth|todo)(\?.*)?$
+        replacement: ${1}/${2}/${3}
+        permanent: false
+    root-path:
+      redirectRegex:
+        regex: ^(https?://[^/]+)/(\?.*)?$
+        replacement: ${1}/todo/${2}
+        permanent: false
+  services:
+    identity:
+      loadBalancer:
+        servers:
+          - url: http://authentik:9000
+    todo:
+      loadBalancer:
+        servers:
+          - url: http://todo:8080

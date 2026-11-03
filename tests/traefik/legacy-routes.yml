@@ -1,0 +1,35 @@
+http:
+  routers:
+    legacy-login:
+      rule: Path(`/auth/login`) || Path(`/auth/callback`) || Path(`/auth/logout`)
+      priority: 30
+      entryPoints: [web]
+      service: todo
+    identity:
+      rule: PathPrefix(`/auth/`)
+      priority: 20
+      entryPoints: [web]
+      service: identity
+    todo-path:
+      rule: PathPrefix(`/todo/`)
+      priority: 10
+      entryPoints: [web]
+      service: todo
+      middlewares: [todo-path]
+    legacy:
+      rule: PathPrefix(`/`)
+      entryPoints: [web]
+      service: todo
+  middlewares:
+    todo-path:
+      stripPrefix:
+        prefixes: [/todo]
+  services:
+    identity:
+      loadBalancer:
+        servers:
+          - url: http://authentik:9000
+    todo:
+      loadBalancer:
+        servers:
+          - url: http://todo:8080

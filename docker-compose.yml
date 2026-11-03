@@ -1,0 +1,108 @@
+name: todo-local
+services:
+  proxy:
+    build: tests/traefik
+    user: "65532:65532"
+    ports:
+      - "${BIND_ADDRESS:-127.0.0.1}:${TODO_PORT:-8326}:8080"
+    depends_on:
+      todo:
+        condition: service_started
+      authentik:
+        condition: service_started
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  todo:
+    image: mwaeckerlin/todo
+    build: .
+    user: somebody:somebody
+    environment:
+      DATABASE_URL: "${TODO_DATABASE_URL:-postgres://todo:local-test-database@database/todo}"
+      APP_ORIGIN: "http://localhost:${TODO_PORT:-8326}"
+      APP_BASE_PATH: /todo
+      OIDC_ISSUER: "http://localhost:${TODO_PORT:-8326}/auth/application/o/todo/"
+      OIDC_INTERNAL_ORIGIN: "http://authentik:9000"
+      OIDC_IDENTITY_ISSUER: "${OIDC_IDENTITY_ISSUER:-}"
+      OIDC_CLIENT_ID: todo
+      OIDC_CLIENT_SECRET: local-test-client
+      OIDC_ROLE_MAP: '{"authentik Admins":"admin","todo-admin":"admin","todo-editor":"editor","todo-reader":"reader"}'
+      ALLOW_INSECURE_HTTP: "true"
+    depends_on:
+      database:
+        condition: service_healthy
+      authentik:
+        condition: service_started
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+  database:
+    image: postgres:latest
+    user: postgres:postgres
+    environment:
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: local-test-database
+      POSTGRES_DB: todo
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - database:/var/lib/postgresql
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U todo -d todo"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  identity-database:
+    image: postgres:latest
+    user: postgres:postgres
+    environment:
+      POSTGRES_USER: authentik
+      POSTGRES_PASSWORD: local-test-identity-database
+      POSTGRES_DB: authentik
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - identity-database:/var/lib/postgresql
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U authentik -d authentik"]
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  authentik:
+    build: tests/authentik
+    user: "1000:1000"
+    command: server
+    environment: &identity-environment
+      AUTHENTIK_SECRET_KEY: local-test-identity-key-do-not-use-in-production
+      AUTHENTIK_POSTGRESQL__HOST: identity-database
+      AUTHENTIK_POSTGRESQL__USER: authentik
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: local-test-identity-database
+      AUTHENTIK_BOOTSTRAP_PASSWORD: local-test-password
+      AUTHENTIK_BOOTSTRAP_TOKEN: local-test-bootstrap-token
+      AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
+      AUTHENTIK_DISABLE_UPDATE_CHECK: "true"
+      AUTHENTIK_WEB__PATH: /auth/
+      TODO_OIDC_SECRET: local-test-client
+      TODO_REDIRECT_URI: "http://localhost:${TODO_PORT:-8326}/todo/auth/callback"
+      TODO_LEGACY_REDIRECT_URI: "http://localhost:${TODO_PORT:-8326}/auth/callback"
+      TODO_APP_ORIGIN: "http://localhost:${TODO_PORT:-8326}/todo/"
+    depends_on:
+      identity-database:
+        condition: service_healthy
+    volumes:
+      - identity-media:/media
+  authentik-worker:
+    build: tests/authentik
+    user: "1000:1000"
+    command: worker
+    environment: *identity-environment
+    depends_on:
+      identity-database:
+        condition: service_healthy
+    volumes:
+      - identity-media:/media
+volumes:
+  database:
+  identity-database:
+  identity-media:

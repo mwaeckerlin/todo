@@ -1,0 +1,71 @@
+{
+  "name": "@mwaeckerlin/todo",
+  "version": "0.1.2",
+  "private": true,
+  "description": "Hierarchical task management with bubbles, boards and permanent edit history",
+  "license": "MIT",
+  "imports": {
+    "#local-test-environment": "./tests/environment.mjs"
+  },
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "prepare:renderer": "node scripts/prepare-renderer.mjs",
+    "prebuild": "npm run prepare:renderer",
+    "build": "docker compose build",
+    "build:app": "node scripts/build.mjs",
+    "prestart": "npm run prepare:renderer",
+    "prestart:daemon": "npm run prepare:renderer",
+    "prestart:dev": "npm run prepare:renderer",
+    "build:docs": "node scripts/diagrams.mjs",
+    "prepare:rust": "cargo fetch",
+    "setup:ui": "npm --prefix . install -w @mwaeckerlin/todo-ui @headlessui/react lucide-react",
+    "setup:browsers": "playwright install chromium firefox",
+    "test:matrix": "node tests/run.mjs --matrix",
+    "test:visual": "node tests/run.mjs --visual",
+    "test:runtime-proof": "node tests/run.mjs --runtime-proof",
+    "test:workspace-proof": "node tests/run.mjs --runtime-proof --workspace-proof",
+    "test:lifecycle": "node tests/lifecycle.mjs",
+    "test:print": "node tests/print.mjs",
+    "test:archive": "node tests/archive.mjs",
+    "test:proof": "node tests/run.mjs --proof",
+    "test:baseline": "node tests/baseline.mjs",
+    "start": "docker compose up --build --force-recreate --remove-orphans",
+    "start:daemon": "docker compose up -d --build --force-recreate --remove-orphans",
+    "start:dev": "docker compose up --build --force-recreate --remove-orphans",
+    "demo": "node scripts/demo.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
+    "demo:stop": "node scripts/demo.mjs --stop",
+    "stop": "docker compose down",
+    "clean": "docker compose down --volumes --remove-orphans",
+    "deploy": "docker compose push todo",
+    "test": "node tests/run.mjs",
+    "test:docs": "node tests/contracts.mjs",
+    "test:styles": "node tests/styles.mjs",
+    "test:inventory": "playwright test --list",
+    "test:compose": "docker compose config --quiet",
+    "test:backend": "cargo test --locked",
+    "test:frontend": "npm --prefix . run check -w @mwaeckerlin/todo-ui",
+    "test:renderer": "python3 tests/renderer.py",
+    "test:image": "node tests/image.mjs",
+    "test:e2e": "playwright test",
+    "test:audit": "npm --prefix . audit --omit=dev",
+    "test:audit:rust": "node tests/audit.mjs",
+    "test:audit:python": "docker build --target renderer-audit --tag todo-renderer-audit .",
+    "dev": "cargo run",
+    "openapi": "cargo run -- --openapi",
+    "build:doc": "npm run build:docs",
+    "test:config": "playwright test --grep F1",
+    "image:save": "node scripts/image.mjs",
+    "image:load": "node scripts/image.mjs --load",
+    "test:ci": "node scripts/ci.mjs"
+  },
+  "overrides": {
+    "katex": "^0.19.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "yaml": "^2.8.1"
+  }
+}

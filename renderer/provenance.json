@@ -1,0 +1,5 @@
+{
+  "source": "task-tree.py",
+  "sha256": "b3c0080404ebf481c51e231794db50071e52e5f90db4bc1c23d9479dbdbee5cc",
+  "description": "Canonical renderer included in this distribution; the HTML custom element and SVG builder share this source."
+}

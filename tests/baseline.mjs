@@ -1,0 +1,12 @@
+import {execFileSync} from 'node:child_process';
+import {mkdir,writeFile} from 'node:fs/promises';
+const image=process.argv[2]??'mwaeckerlin/todo';
+const kind=process.argv[3]??'reported';if(!['reported','runtime','sidebar'].includes(kind))throw new Error('Choose reported, runtime or sidebar baseline.');
+const prefix=kind==='reported'?'baseline':`${kind}-baseline`;
+const record=JSON.parse(execFileSync('docker',['image','inspect',image],{encoding:'utf8'}))[0];
+const name=`todo-${kind==='reported'?'proof':kind}-baseline:${record.Id.split(':')[1].slice(0,16)}`;
+execFileSync('docker',['image','tag',record.Id,name],{stdio:'inherit'});
+await mkdir('artifacts',{recursive:true});await writeFile(`artifacts/${prefix}-image.txt`,name);
+await writeFile(`artifacts/${prefix}-image.json`,JSON.stringify({image:name,id:record.Id},null,2));
+execFileSync('docker',['image','save','--output',`artifacts/${prefix}-image.tar`,name],{stdio:'inherit'});
+console.log(`Preserved the local baseline image ${name}`);

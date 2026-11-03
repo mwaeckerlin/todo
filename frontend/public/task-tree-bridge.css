@@ -1,0 +1,18 @@
+/* Keyboard focus supplements the original drawing styles. */
+#svg circle:focus-visible { outline:.15rem solid var(--tree-focus); }
+.tree-document { block-size:100%; overflow:hidden; }
+.tree-document>header { display:none; }
+.tree-document>main { block-size:100%; padding:.25rem; flex-wrap:nowrap; min-block-size:0; gap:.5rem; }
+#chart { block-size:100%; flex:1 1 0; min-inline-size:0; }
+#chart #svg { inline-size:100%; block-size:100%; max-block-size:none; touch-action:manipulation; }
+details.tree-legend { display:block; flex:0 1 13rem; min-inline-size:0; max-block-size:100%; overflow:auto; }
+details.tree-legend>summary { display:none; }
+details.tree-legend>aside { min-inline-size:0; overflow-wrap:anywhere; }
+@media(max-width:48rem) {
+  .tree-document>main { display:flex; flex-direction:column; align-items:stretch; overflow-y:auto; }
+  #chart { flex:none; inline-size:100%; block-size:auto; aspect-ratio:var(--diagram-aspect,1); max-block-size:calc(100dvh - 3rem); }
+  details.tree-legend { flex:none; inline-size:100%; max-block-size:none; overflow:visible; }
+  details.tree-legend>summary { display:list-item; cursor:pointer; padding:.5rem; min-block-size:2.75rem; }
+  details.tree-legend>aside { padding:.5rem; max-block-size:none; font-size:1rem; }
+  details.tree-legend>aside h2 { font-size:1rem; }
+}

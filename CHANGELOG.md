@@ -1,0 +1,102 @@
+- 2026-11-02 **0.1.2**
+  - Organize completed capabilities by product area and retain stable feature references across tasks, specifications and tests.
+  - Include the development backlog with completed application features and proposed discussions, chat integrations, notifications and planning improvements.
+  - Allow session logout after role removal, retain Origin and CSRF checks and present browser sign-in failures with retry and identity-provider logout controls.
+  - Include a complex public Markdown example spanning the mwaeckerlin container projects, with matching Bubbles, Board and List screenshots at the start of the README.
+  - Explain hierarchical planning, the bubble overview and the current scope for teams evaluating an alternative to Trello.
+  - Verify the bundled renderer against its recorded source digest so standalone checkouts retain SVG and HTML parity checks.
+  - Document Docker Hub credentials and retain the shared multi-architecture Docker workflow with disk preparation on GitHub runners.
+  - Exercise the complete sample hierarchy and details through Markdown round trips and all three browser views.
+  - Keep frontend builds, checks and dependency audits scoped to this checkout when it is registered inside a parent npm workspace.
+  - Align browser journeys with current board navigation, scoped selection lists, localised sign-in, application paths and completed session revocation while retaining every responsive measurement and scroll capture; batch sidebar geometry inside the browser.
+  - Retain browser-created persistence fixtures through cleanup so restart checks read their saved task, sprint and revision records.
+  - Seed actual paragraphs and populate every Board status before checking editor and Board scroll retention, verify the visible table inserted by the editor command and scope paragraph selection to its formatting menu.
+  - Include the signed-out entry and declined-sign-in error in the complete screen and paper capture catalogue.
+  - Keep task conflict and validation messages above the form so they leave editor controls reachable; verify retained text through editor mode changes and capture an actual two-tab conflict in every screen and paper format.
+
+- 2026-11-01 **0.1.1**
+  - Publish one configurable port through Traefik, with TODO under `/todo/` and Authentik administration, OIDC and WebSockets under `/auth/`.
+  - Install TODO administrator, editor and reader groups through the Authentik blueprint and retain identity digests when moving the same provider address.
+  - Fit sidebar actions to their content and keep all navigation and account controls reachable in one vertical scroll area at narrow widths, short heights and enlarged text sizes.
+  - Share colours, text sizes and spacing throughout the interface and formatted editor, respect browser font preferences and keep list indentation within the available width.
+  - Adopt Milkdown Crepe's built-in persistent Icon TopBar and searchable Headless UI owner and dependency selection with complete titles and removable selections.
+  - Keep React and its external-store adapter in the same browser bundle to avoid a circular chunk dependency.
+  - Group sidebar navigation, project actions, files and account controls with Lucide icons and consistent spacing.
+  - Place localised short dates at the right edge of List rows and truncate title and description with an ellipsis on narrow screens.
+  - Keep task references read-only until explicitly unlocked and explain the consequence for older Markdown imports.
+  - Add Clear beside the editor's Due date, share date controls with the context menu and retain cancellation, history and reader access checks.
+  - Use the canonical d3 support-basis enclosure for stable deeply nested diagrams and resolve host Inkscape schemas beside its executable.
+  - Verify imported detail chapters by stable task identifier after title changes and compare their complete Markdown exports.
+  - Load selects Markdown and JSON projects by document title, creates missing projects for administrators and merges existing task trees with complete detail chapters and history.
+  - Limit project creation, renaming and confirmed deletion to administrators, with atomic deletion and conflict checking.
+  - Show one formatted hover popup at the cursor in the shared drawing element and refresh its changed content during live updates.
+  - Preserve an opened parent circle's status and due-date fill behind its children while retaining background navigation.
+  - Keep empty Board columns at half width, edit cards with one click and navigate through child-title lists or double-click.
+  - Remove project views and unsaved drafts immediately on logout or session invalidation across tabs, including local expiry and pending-response protection.
+  - Remove the redundant current-task edit action from the sidebar and retain direct task and breadcrumb editing.
+  - Share the original task-tree custom element between standalone HTML and React, preserve it across view switches and retain every fitted SVG label while browser enlargement improves legibility.
+  - Add collapsible list branches, equal metadata cells, bold titles, compact rows and persistent selection, and hide internal references in the list.
+  - Show a selected leaf as its own Board card.
+  - Add a nested Markdown List between Board and Sprints with pointer, touch and keyboard handles for atomic subtree moves and recorded order changes.
+  - Fit bubbles and boards to the viewport with a collapsible sidebar and one Markdown-title breadcrumb.
+  - Stack board status groups on narrow screens, fit bubbles to the full width with an expandable legend, and provide compact hierarchy navigation without horizontal scrolling.
+  - Wrap narrow editor, history, planning and API content, including long identifiers, code and Markdown tables.
+  - Keep mobile task fields and details in separate vertical sections while retaining the desktop legend width.
+  - Return to the parent when the free diagram background is tapped on narrow screens.
+  - Rename projects with recorded document-heading changes, access checks and retained conflict drafts.
+  - Use the document title as the project name in existing projects, imports, exports, project selection and the browser tab.
+  - Apply native file selections directly through Load, detect JSON and Markdown, and record all applied changes.
+  - Provide direct Save JSON and Save MD actions alongside scoped image downloads.
+  - Use a viewport-sized task editor with a persistent formatting toolbar and primary actions first.
+  - Preserve the diagram document, zoom, editor draft, focus, selection and scroll positions during live updates.
+  - Retain a selected draft parent when another user archives that parent.
+  - Keep the diagram level when a remote change removes its selected task from a filter result.
+  - Retain the viewed history and loaded pages while new revisions await explicit display.
+  - Record failed environment startup immediately and retain current results when dependent checks cannot start.
+  - Verify populated sprint data and assignments across database restarts and include saved planning data in visual checks.
+  - Verify saved image archives on restore and run the local sample from the exact recorded deliverable.
+  - Retain the local sample's project identity after its title changes.
+  - Handle Docker termination with graceful shutdown alongside interactive interruption.
+  - Fit the original SVG and legend to one printed page and retain board titles and saved history in print output.
+  - Synchronise circle gesture and archive tests with the persisted diagram version, and exercise title and body double-click separately.
+  - Verify advisory dependency policy against persisted state and immutable history.
+  - Retain independent scanner-state diagnostics and verify complete bubble print pagination and container termination.
+  - Close connections when the browser reports offline and recover missed changes when it returns online.
+  - Apply the browser's local calendar week to history-derived borders in views and picture exports.
+  - Validate selected task files atomically before applying them.
+  - Use the unchanged original task-tree renderer and its fonts for bubbles, SVG, PNG and standalone HTML.
+  - Keep task editing in a separate browser bridge and include the renderer runtime in the headless image.
+  - Verify complete task-file import and byte-for-byte SVG/HTML parity with the original renderer.
+  - Retain browser diagnostics for each validation phase and measure painted curved labels with the embedded fonts.
+  - Exercise hierarchy and identifier edits, sprint dates, export scope and generated API controls through the browser.
+
+- 2026-10-31 **0.1.0**
+  - Manage hierarchical tasks as bubbles and status boards with shared live updates.
+  - Sign in with OIDC and use identity-provider or environment role assignments.
+  - Distinguish reused usernames by stable identity, refuse ambiguous Markdown owners and retain assignments through provider account renames.
+  - Validate historical owners before restoration and retain selective text restoration from revisions containing unknown owners.
+  - Retain every saved text and property revision and restore selected historical values.
+  - Import and export task Markdown and complete JSON history; export diagrams and standalone HTML.
+  - Plan sprints and enforce task dependencies.
+  - Preserve concurrent sprint drafts and validate Markdown headings using CommonMark parsing.
+  - Preserve indented code, literal HTML and hard breaks in Markdown; reject exports that cannot retain separate detail chapters.
+  - Keep focused leaf circles visible and fit multiline titles into measured free space between child circles.
+  - Display formatted task details for readers while keeping editing and restoration restricted.
+  - Keep the task context menu inside narrow viewports when it opens near an edge.
+  - Refresh known users when opening membership and assignment controls.
+  - Use local calendar dates for sprint defaults, due filters and warning spans across daylight-saving changes.
+  - Show the newest revision when opening History and retain an explicit older selection during updates.
+  - Prepare the Docker-family CI runner and publish only the application image, keeping demonstration identity images local.
+  - Preserve generated task identities between Markdown preview, application and repeated imports without explicit identifiers.
+  - Keep numeric title prefixes distinct from due dates and verify every represented property during Markdown round trips.
+  - Reload project membership on live updates and keep sprint drafts and selected history scoped to their project.
+  - Keep viewport height limits outside diagram exports and save export artefacts for visual verification.
+  - Protect the task draft from additional edits and closing while a save or restore is in progress.
+  - Run the headless service with a complete local identity-provider and database example.
+  - Publish the local Compose demonstration on port 8326 and provide a populated sample with real Authentik sign-in.
+  - Give the populated demo its own Compose lifecycle, runtime directory and data volumes.
+  - Keep automated validation on its own SQL services and loopback ports even when deployment settings are inherited from the caller.
+  - Preserve immediate formatted edits, retain drafts during conflicts and make task creation safe to retry.
+  - Preserve complete JSON history, reject invalid previews and retain safe text editing after prerequisites reopen.
+  - Configure the local identity provider explicitly for Authorization Code and retain a loadable Docker image archive.
+  - Validate exported files and standalone navigation, reconnection, filters, archive restoration and unsafe Markdown.

@@ -1,0 +1,14 @@
+import { readFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+const state=JSON.parse(await readFile('artifacts/visual-session.json','utf8'));
+const saved=JSON.parse(await readFile('artifacts/persistence.json','utf8'));
+const cookie=state.cookies.map(c=>`${c.name}=${c.value}`).join('; ');
+const response=await fetch(`${process.env.TODO_TEST_URL}/api/projects/${saved.project}`,{headers:{cookie},signal:AbortSignal.timeout(15000)});
+assert.equal(response.status,200);const now=await response.json();
+assert.deepEqual(now.tasks,saved.snapshot.tasks);assert.deepEqual(now.sprints,saved.snapshot.sprints);
+assert.equal(now.sprints.length,1);assert.ok(now.tasks.some(task=>task.sprint_id===now.sprints[0].id));
+assert.equal(now.sequence,saved.snapshot.sequence);
+const exported=await fetch(`${process.env.TODO_TEST_URL}/api/projects/${saved.project}/export?format=json`,{headers:{cookie},signal:AbortSignal.timeout(15000)});assert.equal(exported.status,200);
+const {history}=await exported.json();assert.deepEqual(history,saved.history);
+assert.ok(history.some(e=>e.action==='task_restored'));
+console.log(`F2 F8 F9 F10 persistence after service/database restart: ${now.tasks.length} tasks, ${now.sprints.length} sprint and complete revision history retained`);

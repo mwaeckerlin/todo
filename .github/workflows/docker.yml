@@ -1,0 +1,18 @@
+name: docker
+on:
+  push:
+    branches: [master]
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch:
+concurrency: docker-${{ github.ref_name }}
+jobs:
+  docker:
+    uses: mwaeckerlin/scratch/.github/workflows/docker-image.yml@master
+    with:
+      test: npm run test:ci
+      free-disk: true
+    permissions:
+      actions: write
+      contents: read
+    secrets: inherit
